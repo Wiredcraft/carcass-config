@@ -1,6 +1,6 @@
 {
   "name": "carcass-config",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "(Node.js) A config file loader and manager, in Carcass style.",
   "author": {
     "name": "devo.ps",
