@@ -9,14 +9,17 @@ var root = path.resolve(__dirname, 'fixture', 'configs');
 
 describe('Proto / manager:', function() {
 
-    it('should be an object', function() {
+    it('should be a proto', function() {
         lib.should.have.property('proto').with.type('object');
         lib.proto.should.have.property('manager').with.type('object');
     });
 
     describe('Use:', function() {
         var obj = carcass.mixable();
-        obj.mixin(lib.proto.manager);
+
+        before(function() {
+            obj.mixin(lib.proto.manager);
+        });
 
         it('should have some methods', function() {
             obj.should.have.property('env').with.type('function');
