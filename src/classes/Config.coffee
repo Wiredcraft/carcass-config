@@ -10,22 +10,22 @@ carcass = require('carcass')
  * @param *source
 ###
 module.exports = class Config
-    constructor: -> @initialize(arguments...)
+    ###*
+     * Constructor.
+    ###
+    constructor: ->
+        # Default parser to a simple require.
+        @parser(require)
+        # Use arguments as sources.
+        @source(source) for source in arguments
 
+    ###*
+     * Simply route to _load().
+    ###
+    reload: -> return @_load(arguments...)
+
+###*
+ * Mixins.
+###
 carcass.mixable(Config)
 Config::mixin(require('../proto/config'))
-
-###*
- * Initializer.
-###
-Config::initialize = ->
-    # Default parser to a simple require.
-    @parser(require)
-    # Use arguments as sources.
-    @source(source) for source in arguments
-    return @
-
-###*
- * Simply route to _load().
-###
-Config::reload = -> return @_load(arguments...)
