@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "description": "(Node.js) A config file loader and manager, in Carcass style.",
   "author": {
-    "name": "devo.ps",
-    "email": "info@devo.ps",
-    "url": "https://github.com/devo-ps"
+    "name": "Wiredcraft",
+    "email": "info@wiredcraft.com",
+    "url": "http://wiredcraft.com"
   },
-  "contributors": [],
+  "contributors": [
+    "Makara Wang"
+  ],
   "keywords": [
     "carcass",
     "config"
@@ -15,12 +17,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devo-ps/carcass-config.git"
+    "url": "https://github.com/Wiredcraft/carcass-config.git"
   },
   "bugs": {
-    "url": "https://github.com/devo-ps/carcass-config/issues"
+    "url": "https://github.com/Wiredcraft/carcass-config/issues"
   },
-  "homepage": "https://github.com/devo-ps/carcass-config",
+  "homepage": "https://github.com/Wiredcraft/carcass-config",
   "dependencies": {
     "cjson": "~0.3.0",
     "configurable": "0.x",
