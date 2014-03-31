@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/Wiredcraft/carcass-config",
   "dependencies": {
-    "cjson": "~0.3.0",
+    "carcass": ">=0.9.0",
+    "cjson": ">=0.3.0",
     "configurable": "0.x",
     "debug": "0.x",
-    "eson": "~0.5.0"
+    "eson": ">=0.5.0"
   },
   "devDependencies": {
-    "carcass": "latest",
     "gulp": "latest",
     "gulp-coffee": "latest",
     "gulp-coffeelint": "latest",
