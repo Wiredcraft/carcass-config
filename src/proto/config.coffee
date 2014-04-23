@@ -1,11 +1,8 @@
 # debug = require('debug')('carcass:config')
 
-isArray = require('util').isArray
 carcass = require('carcass')
-_ = carcass.highland
-extend = carcass.Object.extendDeep
-isObject = carcass.Object.isObject
-isFunction = carcass.Function.isFunction
+highland = carcass.highland
+_ = require('lodash')
 
 ###*
  * Mixin this so your object / instance can become a config loader, which can
@@ -41,9 +38,9 @@ module.exports = {
      * @private
     ###
     _mapWith: (parser) ->
-        return _.flatMap((item) ->
-            return parser(item) if isFunction(parser)
-            return parser.parse(item) if isObject(parser) and parser.parse?
+        return highland.flatMap((item) ->
+            return parser(item) if _.isFunction(parser)
+            return parser.parse(item) if _.isObject(parser) and parser.parse?
             return item
         )
 
@@ -62,14 +59,14 @@ module.exports = {
     ###
     _load: (done) ->
         parser = @parser()
-        stream = _(@source())
+        stream = highland(@source())
         # Either a single parser or an array of parsers.
-        if isArray(parser)
+        if _.isArray(parser)
             stream = @_mapWith(p)(stream).compact() for p in parser
         else
             stream = @_mapWith(parser)(stream).compact()
         # Deeply merge all the results.
-        stream = stream.reduce({}, extend)
+        stream = stream.reduce({}, _.merge)
         # TODO: stream.errors()
         return stream if not done?
         stream.pull(done)

@@ -1,16 +1,10 @@
-var carcass, extend, isArray, isFunction, isObject, _;
-
-isArray = require('util').isArray;
+var carcass, highland, _;
 
 carcass = require('carcass');
 
-_ = carcass.highland;
+highland = carcass.highland;
 
-extend = carcass.Object.extendDeep;
-
-isObject = carcass.Object.isObject;
-
-isFunction = carcass.Function.isFunction;
+_ = require('lodash');
 
 
 /**
@@ -49,11 +43,11 @@ module.exports = {
    * @private
    */
   _mapWith: function(parser) {
-    return _.flatMap(function(item) {
-      if (isFunction(parser)) {
+    return highland.flatMap(function(item) {
+      if (_.isFunction(parser)) {
         return parser(item);
       }
-      if (isObject(parser) && (parser.parse != null)) {
+      if (_.isObject(parser) && (parser.parse != null)) {
         return parser.parse(item);
       }
       return item;
@@ -76,8 +70,8 @@ module.exports = {
   _load: function(done) {
     var p, parser, stream, _i, _len;
     parser = this.parser();
-    stream = _(this.source());
-    if (isArray(parser)) {
+    stream = highland(this.source());
+    if (_.isArray(parser)) {
       for (_i = 0, _len = parser.length; _i < _len; _i++) {
         p = parser[_i];
         stream = this._mapWith(p)(stream).compact();
@@ -85,7 +79,7 @@ module.exports = {
     } else {
       stream = this._mapWith(parser)(stream).compact();
     }
-    stream = stream.reduce({}, extend);
+    stream = stream.reduce({}, _.merge);
     if (done == null) {
       return stream;
     }

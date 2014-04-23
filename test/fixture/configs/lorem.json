@@ -1,4 +1,8 @@
 {
     "lorem": "ipsum",
+    "ipsum": {
+        "lorem": true,
+        "ipsum": false
+    },
     "dolor": true
 }

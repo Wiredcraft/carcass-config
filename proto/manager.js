@@ -1,4 +1,4 @@
-var carcass, configProto, configurable, extend, isFunction, parsers, path;
+var carcass, configProto, configurable, parsers, path, _;
 
 path = require('path');
 
@@ -10,9 +10,7 @@ configProto = require('./config');
 
 parsers = require('../').parsers;
 
-extend = carcass.Object.extendDeep;
-
-isFunction = carcass.Function.isFunction;
+_ = require('lodash');
 
 
 /**
@@ -23,7 +21,7 @@ isFunction = carcass.Function.isFunction;
  * @see `npm info configurable`
  */
 
-module.exports = extend(configProto, {
+module.exports = _.merge(configProto, {
 
   /**
    * ENV is used in a config file name.
@@ -79,7 +77,7 @@ module.exports = extend(configProto, {
         if (err) {
           return done(err);
         }
-        _this.settings = extend((_ref = _this.settings) != null ? _ref : {}, res);
+        _this.settings = _.merge((_ref = _this.settings) != null ? _ref : {}, res);
         return done(err, res);
       };
     })(this));
@@ -90,12 +88,12 @@ module.exports = extend(configProto, {
    */
   getConsumer: function(name, options) {
     var ins;
-    if (isFunction(name)) {
+    if (_.isFunction(name)) {
       ins = new name(options);
       if (typeof ins.configManager === "function") {
         ins.configManager(this);
       }
-    } else if ((this.classes != null) && isFunction(this.classes[name])) {
+    } else if ((this.classes != null) && _.isFunction(this.classes[name])) {
       ins = new this.classes[name](options);
       if (typeof ins.configManager === "function") {
         ins.configManager(this);

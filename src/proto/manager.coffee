@@ -3,8 +3,7 @@ carcass = require('carcass')
 configurable = require('configurable')
 configProto = require('./config')
 parsers = require('../').parsers
-extend = carcass.Object.extendDeep
-isFunction = carcass.Function.isFunction
+_ = require('lodash')
 
 ###*
  * Mixin this so your object / instance becomes a config manager. It will have
@@ -13,7 +12,7 @@ isFunction = carcass.Function.isFunction
  *
  * @see `npm info configurable`
 ###
-module.exports = extend(configProto, {
+module.exports = _.merge(configProto, {
     ###*
      * ENV is used in a config file name.
      *
@@ -56,7 +55,7 @@ module.exports = extend(configProto, {
     reload: (done = ->) ->
         @_load((err, res) =>
             return done(err) if err
-            @settings = extend(@settings ? {}, res)
+            @settings = _.merge(@settings ? {}, res)
             done(err, res)
         )
 
@@ -64,11 +63,11 @@ module.exports = extend(configProto, {
      * Helper; get an instance of a class and set some defaults.
     ###
     getConsumer: (name, options) ->
-        if isFunction(name)
+        if _.isFunction(name)
             # A provided class.
             ins = new name(options)
             ins.configManager?(@)
-        else if @classes? and isFunction(@classes[name])
+        else if @classes? and _.isFunction(@classes[name])
             # Otherwise an internal class.
             ins = new @classes[name](options)
             ins.configManager?(@)
