@@ -1,4 +1,5 @@
-var carcass, configProto, configurable, parsers, path, _;
+var carcass, configProto, configurable, parsers, path, _,
+  __slice = [].slice;
 
 path = require('path');
 
@@ -28,11 +29,9 @@ module.exports = _.merge(configProto, {
    *
    * @type {Function}
    */
-  env: carcass.helpers.accessor('_env', {
-    getDefault: function() {
-      var _ref;
-      return (_ref = process.env.NODE_ENV) != null ? _ref : 'development';
-    }
+  env: carcass.helpers.accessor('_env', function() {
+    var _ref;
+    return (_ref = process.env.NODE_ENV) != null ? _ref : 'development';
   }),
 
   /**
@@ -86,15 +85,24 @@ module.exports = _.merge(configProto, {
   /**
    * Helper; get an instance of a class and set some defaults.
    */
-  getConsumer: function(name, options) {
-    var ins;
+  getConsumer: function() {
+    var args, ins, name;
+    name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
     if (_.isFunction(name)) {
-      ins = new name(options);
+      ins = (function(func, args, ctor) {
+        ctor.prototype = func.prototype;
+        var child = new ctor, result = func.apply(child, args);
+        return Object(result) === result ? result : child;
+      })(name, args, function(){});
       if (typeof ins.configManager === "function") {
         ins.configManager(this);
       }
     } else if ((this.classes != null) && _.isFunction(this.classes[name])) {
-      ins = new this.classes[name](options);
+      ins = (function(func, args, ctor) {
+        ctor.prototype = func.prototype;
+        var child = new ctor, result = func.apply(child, args);
+        return Object(result) === result ? result : child;
+      })(this.classes[name], args, function(){});
       if (typeof ins.configManager === "function") {
         ins.configManager(this);
       }

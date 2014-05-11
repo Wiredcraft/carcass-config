@@ -18,9 +18,9 @@ module.exports = _.merge(configProto, {
      *
      * @type {Function}
     ###
-    env: carcass.helpers.accessor('_env', {
-        getDefault: -> process.env.NODE_ENV ? 'development'
-    })
+    env: carcass.helpers.accessor('_env', ->
+        return process.env.NODE_ENV ? 'development'
+    )
 
     ###*
      * We assume all the config files are in a same directory.
@@ -62,14 +62,14 @@ module.exports = _.merge(configProto, {
     ###*
      * Helper; get an instance of a class and set some defaults.
     ###
-    getConsumer: (name, options) ->
+    getConsumer: (name, args...) ->
         if _.isFunction(name)
             # A provided class.
-            ins = new name(options)
+            ins = new name(args...)
             ins.configManager?(@)
         else if @classes? and _.isFunction(@classes[name])
             # Otherwise an internal class.
-            ins = new @classes[name](options)
+            ins = new @classes[name](args...)
             ins.configManager?(@)
         # TODO: otherwise throw.
         return ins

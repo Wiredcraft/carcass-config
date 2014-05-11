@@ -25,12 +25,11 @@ module.exports = {
     ###*
      * A name is used to get the config from the manager.
     ###
-    configName: carcass.helpers.accessor('_configName', {
-        getDefault: ->
-            # Use the instance id if available.
-            # Use the class name if available.
-            return @_id ? @constructor.name ? null
-    })
+    configName: carcass.helpers.accessor('_configName', ->
+        # Use the instance id if available.
+        # Use the class name if available.
+        return @_id ? @constructor.name ? null
+    )
 
     ###*
      * Retrieve config.

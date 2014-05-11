@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Wiredcraft/carcass-config",
   "dependencies": {
-    "carcass": "~0.11.0",
+    "carcass": "~0.11.1",
     "cjson": "~0.3.0",
     "configurable": "0.x",
     "debug": "*",

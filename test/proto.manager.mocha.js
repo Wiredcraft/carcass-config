@@ -7,6 +7,13 @@ var lib = require('../');
 var path = require('path');
 var root = path.resolve(__dirname, 'fixture', 'configs');
 
+// Test consumer.
+function Consumer(a, b) {
+    this.a = a;
+    this.b = b;
+}
+Consumer.prototype.configManager = carcass.helpers.accessor('_configManager');
+
 describe('Proto / manager:', function() {
 
     it('should be a proto', function() {
@@ -100,5 +107,27 @@ describe('Proto / manager:', function() {
         it('should have settings now', function() {
             obj.get('root').should.equal(root);
         });
+
+        it('can get a consumer', function() {
+            var consumer = obj.getConsumer(Consumer, 1, 2);
+            consumer.should.be.type('object');
+            consumer.should.have.property('a', 1);
+            consumer.should.have.property('b', 2);
+            consumer.should.have.property('configManager').with.type('function');
+            consumer.configManager().should.equal(obj);
+        });
+
+        it('can get a consumer', function() {
+            obj.classes = {
+                Consumer: Consumer
+            };
+            var consumer = obj.getConsumer('Consumer', 1, 2);
+            consumer.should.be.type('object');
+            consumer.should.have.property('a', 1);
+            consumer.should.have.property('b', 2);
+            consumer.should.have.property('configManager').with.type('function');
+            consumer.configManager().should.equal(obj);
+        });
+
     });
 });

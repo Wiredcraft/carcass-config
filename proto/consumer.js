@@ -30,11 +30,9 @@ module.exports = {
   /**
    * A name is used to get the config from the manager.
    */
-  configName: carcass.helpers.accessor('_configName', {
-    getDefault: function() {
-      var _ref, _ref1;
-      return (_ref = (_ref1 = this._id) != null ? _ref1 : this.constructor.name) != null ? _ref : null;
-    }
+  configName: carcass.helpers.accessor('_configName', function() {
+    var _ref, _ref1;
+    return (_ref = (_ref1 = this._id) != null ? _ref1 : this.constructor.name) != null ? _ref : null;
   }),
 
   /**
