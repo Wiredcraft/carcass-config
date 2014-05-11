@@ -1,4 +1,9 @@
 
+0.2.1 / 2014-05-11
+==================
+
+ * Updated carcass. Improved manager.getConsumer() to allow multiple arguments.
+
 0.2.0 / 2014-04-23
 ==================
 
