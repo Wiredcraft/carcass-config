@@ -38,12 +38,12 @@ module.exports = {
    * @param {Function|Object} parser can be either a function or an object, in
    *   which case the parser.parse() will be used.
    *
-   * @return {Function} curried flatMap().
+   * @return {Function} curried map().
    *
    * @private
    */
   _mapWith: function(parser) {
-    return highland.flatMap(function(item) {
+    return highland.map(function(item) {
       if (_.isFunction(parser)) {
         return parser(item);
       }
@@ -74,10 +74,10 @@ module.exports = {
     if (_.isArray(parser)) {
       for (_i = 0, _len = parser.length; _i < _len; _i++) {
         p = parser[_i];
-        stream = this._mapWith(p)(stream).compact();
+        stream = this._mapWith(p)(stream).flatten().compact();
       }
     } else {
-      stream = this._mapWith(parser)(stream).compact();
+      stream = this._mapWith(parser)(stream).flatten().compact();
     }
     stream = stream.reduce({}, _.merge);
     if (done == null) {

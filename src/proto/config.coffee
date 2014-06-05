@@ -33,12 +33,12 @@ module.exports = {
      * @param {Function|Object} parser can be either a function or an object, in
      *   which case the parser.parse() will be used.
      *
-     * @return {Function} curried flatMap().
+     * @return {Function} curried map().
      *
      * @private
     ###
     _mapWith: (parser) ->
-        return highland.flatMap((item) ->
+        return highland.map((item) ->
             return parser(item) if _.isFunction(parser)
             return parser.parse(item) if _.isObject(parser) and parser.parse?
             return item
@@ -62,9 +62,9 @@ module.exports = {
         stream = highland(@source())
         # Either a single parser or an array of parsers.
         if _.isArray(parser)
-            stream = @_mapWith(p)(stream).compact() for p in parser
+            stream = @_mapWith(p)(stream).flatten().compact() for p in parser
         else
-            stream = @_mapWith(parser)(stream).compact()
+            stream = @_mapWith(parser)(stream).flatten().compact()
         # Deeply merge all the results.
         stream = stream.reduce({}, _.merge)
         # TODO: stream.errors()
