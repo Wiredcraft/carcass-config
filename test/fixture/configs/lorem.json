@@ -4,5 +4,9 @@
         "lorem": true,
         "ipsum": false
     },
-    "dolor": true
+    "dolor": true,
+    "two_seconds": "2 seconds",
+    "two_minutes": "2 minutes",
+    "two_hours": "2 hours",
+    "two_days": "2 days"
 }

@@ -127,6 +127,33 @@ describe('Parsers:', function() {
                 res.should.have.property('lorem', 'ipsum');
                 res.should.have.property('dolor', false);
                 res.should.have.property('root', root);
+                res.should.have.property('two_seconds', '2 seconds');
+                res.should.have.property('two_minutes', '2 minutes');
+                res.should.have.property('two_hours', '2 hours');
+                res.should.have.property('two_days', '2 days');
+                done(err);
+            });
+        });
+    });
+
+    describe('File reader + eson + eson.seconds:', function() {
+
+        before(function() {
+            config = new Config(lorem, ipsum);
+            var eson = parsers.eson().use(parsers.eson.seconds);
+            config.parser([parsers.file, eson]);
+        });
+
+        it('can reload', function(done) {
+            config.reload(function(err, res) {
+                res.should.be.type('object');
+                res.should.have.property('lorem', 'ipsum');
+                res.should.have.property('dolor', false);
+                res.should.have.property('root', '{root}');
+                res.should.have.property('two_seconds', 2);
+                res.should.have.property('two_minutes', 120);
+                res.should.have.property('two_hours', 7200);
+                res.should.have.property('two_days', 172800);
                 done(err);
             });
         });
@@ -150,4 +177,5 @@ describe('Parsers:', function() {
             });
         });
     });
+
 });
