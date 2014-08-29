@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Wiredcraft/carcass-config",
   "dependencies": {
-    "carcass": "0.11.4",
+    "carcass": "0.11.5",
     "cjson": "0.3.0",
     "configurable": "0.x",
     "debug": "1.x",
@@ -35,6 +35,7 @@
     "gulp": "latest",
     "gulp-coffee": "latest",
     "gulp-coffeelint": "latest",
+    "gulp-coverage": "latest",
     "gulp-jshint": "latest",
     "gulp-mocha": "latest",
     "gulp-util": "latest",
