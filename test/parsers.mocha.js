@@ -136,6 +136,52 @@ describe('Parsers:', function() {
         });
     });
 
+    describe('File reader + eson + eson.duration:', function() {
+
+        before(function() {
+            config = new Config(lorem, ipsum);
+            var eson = parsers.eson().use(parsers.eson.duration);
+            config.parser([parsers.file, eson]);
+        });
+
+        it('can reload', function(done) {
+            config.reload(function(err, res) {
+                res.should.be.type('object');
+                res.should.have.property('lorem', 'ipsum');
+                res.should.have.property('dolor', false);
+                res.should.have.property('root', '{root}');
+                res.should.have.property('two_seconds').with.type('object');
+                res.should.have.property('two_minutes').with.type('object');
+                res.should.have.property('two_hours').with.type('object');
+                res.should.have.property('two_days').with.type('object');
+                done(err);
+            });
+        });
+    });
+
+    describe('File reader + eson + eson.milliseconds:', function() {
+
+        before(function() {
+            config = new Config(lorem, ipsum);
+            var eson = parsers.eson().use(parsers.eson.milliseconds);
+            config.parser([parsers.file, eson]);
+        });
+
+        it('can reload', function(done) {
+            config.reload(function(err, res) {
+                res.should.be.type('object');
+                res.should.have.property('lorem', 'ipsum');
+                res.should.have.property('dolor', false);
+                res.should.have.property('root', '{root}');
+                res.should.have.property('two_seconds', 2000);
+                res.should.have.property('two_minutes', 120000);
+                res.should.have.property('two_hours', 7200000);
+                res.should.have.property('two_days', 172800000);
+                done(err);
+            });
+        });
+    });
+
     describe('File reader + eson + eson.seconds:', function() {
 
         before(function() {

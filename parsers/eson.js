@@ -8,39 +8,60 @@
  *
  * @return {Function} the Eson class.
  */
-var eson;
+var eson, moment;
 
 module.exports = eson = require('eson');
 
+moment = require('moment');
+
 
 /**
- * Similar to `eson.ms` but convert to seconds.
+ * Similar to `eson.ms` but convert to a Moment duration.
+ *
+ * @see http://momentjs.com/docs/#/durations/
  */
 
-eson.seconds = function(key, val) {
+eson.duration = function(key, val) {
   var m, n, type;
-  m = /^(\d+) *(seconds?|s|minutes?|m|hours?|h|days?|d)$/.exec(val);
+  m = /^(\d+) *(milliseconds?|seconds?|minutes?|hours?|days?|weeks?|months?|years?)$/.exec(val);
   if (!m) {
     return;
   }
   n = ~~m[1];
   type = m[2];
-  switch (type) {
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * 86400;
-    case 'hours':
-    case 'hour':
-    case 'h':
-      return n * 3600;
-    case 'minutes':
-    case 'minute':
-    case 'm':
-      return n * 60;
-    case 'seconds':
-    case 'second':
-    case 's':
-      return n;
+  return moment.duration(n, type);
+};
+
+
+/**
+ * Similar to `eson.ms` but built with duration.
+ *
+ * The API is slightly different with `eson.ms`. See `eson.duration()`.
+ */
+
+eson.milliseconds = function(key, val) {
+  var duration;
+  duration = eson.duration.apply(eson, arguments);
+  if (duration) {
+    return duration.asMilliseconds();
+  } else {
+    return null;
+  }
+};
+
+
+/**
+ * Similar to `eson.ms` but convert to seconds.
+ *
+ * Now built with duration.
+ */
+
+eson.seconds = function(key, val) {
+  var duration;
+  duration = eson.duration.apply(eson, arguments);
+  if (duration) {
+    return duration.asSeconds();
+  } else {
+    return null;
   }
 };
