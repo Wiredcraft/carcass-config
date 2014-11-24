@@ -1,4 +1,13 @@
 
+0.3.0 / 2014-11-24
+==================
+
+  * Added YAML parser.
+  * [api change] environment specific config files now have the highest priority (in the manager proto, by default). close #1.
+  * Added momentjs and built some eson plugins with it: duration, milliseconds, seconds.
+  * Test eson.seconds.
+  * Update license. Added test coverage. Use coffeelint.json from Carcass.
+
 0.2.2 / 2014-06-05
 ==================
 
