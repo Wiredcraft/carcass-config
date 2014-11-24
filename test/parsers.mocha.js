@@ -36,6 +36,9 @@ describe('Parsers:', function() {
                 res.should.have.property('lorem', 'ipsum');
                 res.should.have.property('dolor', false);
                 res.should.have.property('root', '{root}');
+                res.should.have.property('ipsum').with.type('object');
+                res.ipsum.should.have.property('lorem', true);
+                res.ipsum.should.have.property('ipsum', true);
                 done(err);
             });
         });
