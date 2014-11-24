@@ -43,6 +43,9 @@ module.exports = _.merge(configProto, {
 
   /**
    * Initialize config.
+   *
+   * Note that the parsers and the file stacks are just some nice defaults. You
+   *   can safely override this.
    */
   initConfig: function(filename) {
     var dir, ext, name;
@@ -58,8 +61,8 @@ module.exports = _.merge(configProto, {
     ext = path.extname(filename);
     name = path.basename(filename, ext);
     this.source(path.resolve(dir, name + '.default' + ext));
-    this.source(path.resolve(dir, name + '.' + this.env() + ext));
     this.source(path.resolve(dir, filename));
+    this.source(path.resolve(dir, name + '.' + this.env() + ext));
     return this;
   },
 

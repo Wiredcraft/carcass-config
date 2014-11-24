@@ -31,6 +31,9 @@ module.exports = _.merge(configProto, {
 
     ###*
      * Initialize config.
+     *
+     * Note that the parsers and the file stacks are just some nice defaults. You
+     *   can safely override this.
     ###
     initConfig: (filename = 'config.json') ->
         configurable(@)
@@ -41,12 +44,12 @@ module.exports = _.merge(configProto, {
         return @ if not dir?
         ext = path.extname(filename)
         name = path.basename(filename, ext)
-        # Default.
+        # Default, i.e.`config.default.json`.
         @source(path.resolve(dir, name + '.default' + ext))
-        # Environment.
-        @source(path.resolve(dir, name + '.' + @env() + ext))
-        # The file.
+        # The config, i.e.`config.json`.
         @source(path.resolve(dir, filename))
+        # Environment, `config.development.json` etc.
+        @source(path.resolve(dir, name + '.' + @env() + ext))
         return @
 
     ###*
